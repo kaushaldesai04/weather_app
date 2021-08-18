@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        table, th, td {
+          border: 1px solid black;
+          border-collapse: collapse;
+          
+        }
+        body{
+            background-image: url(" {% static 'weather/img/img1.jpg' %}");
+            background-size: cover;
+            
+        }
+        
+    </style>
+    <title>weather app</title>
+</head>
+<header style="font-size:40px; background-color:gray;size:80px;height: 160px;color: white;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <br>
+    What's the weather like ?
+</header>
+<body>
+    <form method="POST"> 
+    {% csrf_token %}
+    <p align="center">
+        <span >{{ form.name }}</span>
+        <button type="submit" class="button is-info">
+            See weather
+        </button>
+    </p>
+    </form>
+    <br>
+    <br>
+    <p>
+        <table style="margin-left: auto;margin-right: auto;size: 150px;width: 400px; height: 150px;text-align: center;">
+            {% for city_weather in weather_data %}
+            <tr style="background-color:aquamarine;">
+                <td>
+                    <div style="float: left;">
+                        <img src="http://openweathermap.org/img/w/{{ city_weather.icon }}.png" alt="Image">
+                    </div>
+                    <div>
+                        <p>
+                            <span style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;font-size: 30px;">
+                                {{ city_weather.city }}
+                            </span>
+                            <br>
+                            <span style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;font-size: 20px;">
+                                {{ city_weather.temperature }}° F
+                            </span>
+                            <br>
+                            <span style="font-family: Arial, Helvetica, sans-serif;">{{ city_weather.description }}
+                        </p>
+                    </div>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </p>
+</body>
+</html>
